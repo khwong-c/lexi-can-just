@@ -1,0 +1,11 @@
+# created by virtualenv automatically
+lexican.db/*
+lexican.db.backup/*
+lexican.merged.db/*
+!lexican.db/.gitkeep
+!lexican.merged.db/.gitkeep
+log/*.log
+Lib
+pyvenv.cfg
+Scripts
+.idea
