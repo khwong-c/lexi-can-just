@@ -33,7 +33,7 @@ def crawl_new_words():
     for i, row in enumerate(prased.find_all('tr')):  # type: int, Tag
         if i == 0: continue
         ch, time = (c.text for c in row.contents)
-        timestamp = str(int(datetime.strptime(time, '%Y-%m-%d %H:%M:%S').astimezone(TZ_HK).timestamp()))
+        timestamp = str(int(datetime.strptime(time, '%Y-%m-%d %H:%M:%S').replace(tzinfo=TZ_HK).timestamp()))
         crawled_records[timestamp] = crawled_records.get(timestamp, []) + [ch]
 
     # Load existing data as dictionary
