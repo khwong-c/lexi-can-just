@@ -23,7 +23,7 @@ The crawler will be hosted on Lightsail with API access to the data soon.
 - Character repeatedly searched, before leaving the 50-char list, appears once only but with time updated.
 
 ## TO-DO
-- [ ] Host the crawler on Lightsail.
+- [x] Host the crawler on Lightsail.
 - [ ] Web API for data access (with FastAPI).
 - [ ] Start-up script for launching the crawler and web service.
 - [ ] Analyse log and finetune crawling interval.
