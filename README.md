@@ -13,7 +13,7 @@ However, historical results are not available to the public.
 
 ## What does the crawler do?
 It polls and parses the search record every 10 seconds.
-Results per second are temporarily stored in files and merged in 10 minutes intervals.
+Results per second are temporarily stored in files and merged in 30 minutes intervals.
 
 ## Where to access the data?
 The crawler will be hosted on Lightsail with API access to the data soon.
@@ -24,6 +24,7 @@ The crawler will be hosted on Lightsail with API access to the data soon.
 
 ## TO-DO
 - [x] Host the crawler on Lightsail.
-- [ ] Web API for data access (with FastAPI).
-- [ ] Start-up script for launching the crawler and web service.
+- [x] Web API for data access (with FastAPI).
+- [ ] Think of functions provided by the service. (Select stats from an interval? Generated Graphics?)
+- [x] Start-up script for launching the crawler and web service.
 - [ ] Analyse log and finetune crawling interval.
