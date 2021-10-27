@@ -1,0 +1,2 @@
+@reboot cd /home/ec2-user/lexi-can-just && /usr/local/bin/python3 first-crawler.py 2> /dev/null
+@reboot cd /home/ec2-user/lexi-can-just && /home/ec2-user/.local/bin/uvicorn http-service:app --reload --host 0.0.0.0
