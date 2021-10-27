@@ -4,7 +4,7 @@ URL_JUST = "https://humanum.arts.cuhk.edu.hk/Lexis/lexi-can/just.php"
 SIZE_LOG = 1024 * 1024 * 10
 TZ_HK = timezone(timedelta(hours=8))
 POLL_INTERVAL = 10 # In Seconds
-MERGE_INTERVAL = 10 # In minutes
+MERGE_INTERVAL = 30 # In minutes
 MERGE_INTERVAL_SEC = MERGE_INTERVAL * 60
 
 # Files
