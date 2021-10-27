@@ -6,19 +6,7 @@ import logging
 from logging.handlers import RotatingFileHandler
 import requests
 from bs4 import BeautifulSoup, Tag
-
-# Config
-URL_JUST = "https://humanum.arts.cuhk.edu.hk/Lexis/lexi-can/just.php"
-SIZE_LOG = 1024 * 1024 * 10
-TZ_HK = timezone(timedelta(hours=8))
-POLL_INTERVAL = 10 # In Seconds
-MERGE_INTERVAL = 10 # In minutes
-MERGE_INTERVAL_SEC = MERGE_INTERVAL * 60
-
-# Files
-FILE_LOG = "log/crawl.log"
-DIR_DB  = "lexican.db"
-DIR_DB_MERGED  = "lexican.merged.db"
+from config import *
 
 def crawl_new_words():
     # Obtain the webpage and prase the page
@@ -101,7 +89,7 @@ if __name__ == "__main__":
     logging.basicConfig(level=logging.INFO,
         format = '%(asctime)s %(levelname)s %(message)s',
         datefmt = '%Y-%m-%d %H:%M:%S',
-        handlers = [RotatingFileHandler(FILE_LOG, mode='a', maxBytes=SIZE_LOG, backupCount=10, encoding='utf-8'), ]
+        handlers = [RotatingFileHandler(FILE_LOG_CRAWL, mode='a', maxBytes=SIZE_LOG, backupCount=10, encoding='utf-8'), ]
     )
     while True:
         try:
