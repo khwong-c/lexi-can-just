@@ -8,7 +8,7 @@ app = FastAPI()
 
 @app.get("/")
 def read_root():
-    return {'just to':'say hi'}
+    return {'just to':'say hi, again.'}
 
 @app.get("/update_server")
 def update_service():
