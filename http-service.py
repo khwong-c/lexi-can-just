@@ -6,9 +6,10 @@ from collections import Counter
 from functools import lru_cache
 
 from fastapi import FastAPI
-
+from fastapi.middleware.gzip import GZipMiddleware
 
 app = FastAPI()
+app.add_middleware(GZipMiddleware)
 
 # Getting the name of the latest file as signature
 def get_latest_file() -> str:
