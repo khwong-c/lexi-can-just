@@ -20,3 +20,5 @@ SQL_SELECT_RANGED_RECORD = """
 SQL_GET_LATEST_TIMESTAMP = """
     SELECT timestamp FROM lexican_history ORDER BY timestamp DESC LIMIT 1;
 """
+
+RECORD_TITLE = [('ts','interval','chars')]
