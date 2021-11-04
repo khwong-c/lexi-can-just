@@ -1,4 +1,5 @@
 # created by virtualenv automatically
+*.db
 lexican.db/*
 lexican.db.backup/*
 lexican.merged.db/*
