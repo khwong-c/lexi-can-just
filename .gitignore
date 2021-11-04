@@ -5,7 +5,7 @@ lexican.db.backup/*
 lexican.merged.db/*
 !lexican.db/.gitkeep
 !lexican.merged.db/.gitkeep
-log/*.log
+log/*.log*
 Lib
 pyvenv.cfg
 Scripts
