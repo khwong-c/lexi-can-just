@@ -2,10 +2,12 @@ from typing import *
 from config import *
 from http_service_utils import *
 
+from sql_queries import *
+import sqlite3
+
 import gc
 import os
 from collections import Counter
-from functools import lru_cache
 
 from fastapi import FastAPI
 # from fastapi.middleware.gzip import GZipMiddleware
@@ -14,26 +16,25 @@ app = FastAPI()
 # app.add_middleware(GZipMiddleware)
 
 ## Routines to read all data records
-@cache_on_latest_file
+@cache_on_latest_ts
 def read_all_records() -> List[Dict[str,str]]:
-    files = get_whole_file_list()
-    return [
-        {
-            'time': ts,
-            'words': open(os.path.join(DIR_DB_MERGED, ts)).readline()
-        }
-        for ts in files
-    ]
+    with sqlite3.connect(SQLITE_DB_MERGED) as db:
+        c = db.cursor()
+        c.row_factory = sqlite3.Row
+        c.execute(SQL_SELECT_ALL_RECORD)
+        result = c.fetchall()
+    return [res for res in result]
 
-@cache_on_latest_file
+@cache_on_latest_ts
 def count_all_data() -> List[Dict[str,str]]:
     recs = read_all_records()
-    all_texts = ''.join(rec['words'] for rec in recs)
+    all_texts = ''.join(rec['chars'] for rec in recs)
     return Counter(all_texts)
 
 def read_log() -> List[str]:
     return [line.strip() for line in open(FILE_LOG_CRAWL,'r').readlines()]
 
+# API Endpoitns
 @app.get("/")
 def read_root():
     return {'just to':'say hi, again.'}

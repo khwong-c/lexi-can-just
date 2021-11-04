@@ -6,6 +6,8 @@ import logging
 from logging.handlers import RotatingFileHandler
 import requests
 from bs4 import BeautifulSoup, Tag
+import sqlite3
+from sql_queries import *
 from config import *
 
 def crawl_new_words():
@@ -75,9 +77,18 @@ def merge_files():
     for f_int in file_list:
         merge_list[f_int - (f_int % MERGE_INTERVAL_SEC)].append(os.path.join(DIR_DB, str(f_int)))
 
-    for output_ts, input_files in merge_list.items():
-        with open(os.path.join(DIR_DB_MERGED, str(output_ts)), 'w') as f_out:
-            f_out.write(''.join([open(f_in).readline() for f_in in input_files]))
+    # Read all files and form records
+    merge_records = [
+        (ts,MERGE_INTERVAL,''.join(open(f_in).readline() for f_in in input_files),) 
+        for ts, input_files in merge_list.items()
+    ]
+
+    # Insert all records.
+    with sqlite3.connect(SQLITE_DB_MERGED) as conn:
+        conn.executemany(SQL_INSERT_RECORD,merge_records)
+    
+    # Remove legacy files
+    for input_files in merge_list.values():
         for f_in in input_files:
             os.unlink(f_in)
 
@@ -91,6 +102,10 @@ if __name__ == "__main__":
         datefmt = '%Y-%m-%d %H:%M:%S',
         handlers = [RotatingFileHandler(FILE_LOG_CRAWL, mode='a', maxBytes=SIZE_LOG, backupCount=10, encoding='utf-8'), ]
     )
+    # Setup tables if needed
+    with sqlite3.connect(SQLITE_DB_MERGED) as conn:
+        conn.execute(SQL_CREATE_TABLE)
+   
     while True:
         try:
             crawl_new_words()

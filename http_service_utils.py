@@ -1,10 +1,11 @@
 from typing import *
 import os
-import glob
 from config import *
 from functools import wraps
 from functools import lru_cache
-from time import perf_counter
+from time import perf_counter, monotonic
+import sqlite3
+from sql_queries import *
 
 # Getting the name of the latest file as signature
 ALL_FILES = os.path.join(DIR_DB_MERGED,'*')
@@ -19,19 +20,44 @@ def benchmark(func):
         return result
     return timed_function
 
-def get_latest_file() -> str:
-    files = [f for f in os.scandir(DIR_DB_MERGED)]
-    return max(files,key=lambda f:f.stat().st_ctime).name
+def timed_cache(TTL=20):
 
-def cache_on_latest_file(cache_size=1):
+    def internal_deco(func):
+        @wraps(func)
+        def time_cached_function(*args,**kwargs):
+            sig = time_cached_function.signature
+            latest_sig = int(monotonic())
+            if sig + time_cached_function.TTL < latest_sig:
+                time_cached_function.signature = latest_sig
+                time_cached_function.result = func(*args,**kwargs)
+            return time_cached_function.result
+        time_cached_function.signature = -TTL - 1
+        time_cached_function.TTL = TTL
+        
+        return time_cached_function
+    
+    if callable(TTL):
+        func, TTL = TTL, 20
+        return internal_deco(func)
+    else:
+        return internal_deco
+
+@timed_cache(TS_CACHE_TTL)
+def get_latest_sql_ts() -> int:
+    with sqlite3.connect(SQLITE_DB_MERGED) as conn:
+        c = conn.cursor()
+        c.execute(SQL_GET_LATEST_TIMESTAMP)
+        return 0 if (result := c.fetchone()) is None else result[0]
+
+def cache_on_latest_ts(cache_size=1):
     
     def internal_deco(func):
         @wraps(func)
         def filename_cached_function(*args,**kwargs):
             sig = filename_cached_function.signature
-            latest_name = get_latest_file()
-            if sig is None or sig != latest_name:
-                filename_cached_function.signature = latest_name
+            latest_sig = get_latest_sql_ts()
+            if sig is None or sig != latest_sig:
+                filename_cached_function.signature = latest_sig
                 filename_cached_function.cached_function.cache_clear()
             return filename_cached_function.cached_function(*args,**kwargs)
         filename_cached_function.signature = None
@@ -43,8 +69,3 @@ def cache_on_latest_file(cache_size=1):
         return internal_deco(func)
     else:
         return internal_deco
-
-@cache_on_latest_file
-def get_whole_file_list() -> List[str]:
-    # Filter .gitkeep
-    return [f.name for f in os.scandir(DIR_DB_MERGED) if f.is_file() and not f.name.startswith('.')]
