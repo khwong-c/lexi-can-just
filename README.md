@@ -21,6 +21,7 @@ The crawler will be hosted on Lightsail with API access to the data soon.
 ## Remark
 - The searching rate on Lexi-can is around 100 characters per minute.
 - Character repeatedly searched, before leaving the 50-char list, appears once only but with time updated.
+- One of the greatest concern is that the crawler is hosted on Lightsail with the lowest capability (1 CPU, 0.5GB RAM). Examples are how we modify lru_cache into "cache_on_latest_file" and revision on "get_latest_file".
 
 ## TO-DO
 - [x] Host the crawler on Lightsail.
