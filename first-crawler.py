@@ -110,9 +110,11 @@ if __name__ == "__main__":
         try:
             crawl_new_words()
             merge_files()
-            sleep(POLL_INTERVAL)
         except Exception as e:
             logging.error(e)
+        finally:
+            sleep(POLL_INTERVAL)
+
 
 
 
