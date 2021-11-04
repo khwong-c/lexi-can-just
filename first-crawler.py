@@ -99,7 +99,7 @@ if __name__ == "__main__":
     # Setup Log
     logging.basicConfig(level=logging.INFO,
         format = '%(asctime)s %(levelname)s %(message)s',
-        datefmt = '%Y-%m-%d %H:%M:%S',
+        datefmt = LOG_TIME_FORMAT,
         handlers = [RotatingFileHandler(FILE_LOG_CRAWL, mode='a', maxBytes=SIZE_LOG, backupCount=10, encoding='utf-8'), ]
     )
     # Setup tables if needed

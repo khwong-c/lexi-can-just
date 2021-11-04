@@ -1,5 +1,7 @@
 import os
 from datetime import timedelta, timezone
+# Logs
+LOG_TIME_FORMAT = '%Y-%m-%d %H:%M:%S'
 # Config
 URL_JUST = "https://humanum.arts.cuhk.edu.hk/Lexis/lexi-can/just.php"
 SIZE_LOG = 1024 * 1024 * 10

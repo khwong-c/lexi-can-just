@@ -144,8 +144,8 @@ def get_count_year(year: int):
 @debug_gate
 def get_log_crawl():
     logs = [ line.split(' ') for line in read_log() if 'Crawl' in line ]
-    return [
-        {'time':' '.join((words[0],words[1])), 'words': int(words[-1])}
+    return [['time','words']] + [
+        [int(datetime.strptime(' '.join((words[0], words[1])),LOG_TIME_FORMAT).timestamp()), int(words[-1])]
         for words in logs
     ]
 
@@ -153,8 +153,8 @@ def get_log_crawl():
 @debug_gate
 def get_log_merge():
     logs = [line.split(' ') for line in read_log() if 'Merge' in line]
-    return [
-        {'time': ' '.join((words[0], words[1])), 'files': int(words[-1])}
+    return [['time','files']] + [
+        [int(datetime.strptime(' '.join((words[0], words[1])),LOG_TIME_FORMAT).timestamp()), int(words[-1])]
         for words in logs
     ]
 
