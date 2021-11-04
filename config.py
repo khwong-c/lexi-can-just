@@ -12,7 +12,6 @@ TS_CACHE_TTL = 60
 # Files
 FILE_LOG_CRAWL = "log/crawl.log"
 DIR_DB  = "lexican.db"
-DIR_DB_MERGED  = "lexican.merged.db"
 SQLITE_DB_MERGED  = "lexican.merged.sqlite.db"
 SQLITE_DB_LOG  = "lexican.log.sqlite.db"
 

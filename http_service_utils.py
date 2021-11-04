@@ -7,9 +7,6 @@ from time import perf_counter, monotonic
 import sqlite3
 from sql_queries import *
 
-# Getting the name of the latest file as signature
-ALL_FILES = os.path.join(DIR_DB_MERGED,'*')
-
 def benchmark(func):
     @wraps(func)
     def timed_function(*args,**kwargs):
@@ -47,7 +44,9 @@ def get_latest_sql_ts() -> int:
     with sqlite3.connect(SQLITE_DB_MERGED) as conn:
         c = conn.cursor()
         c.execute(SQL_GET_LATEST_TIMESTAMP)
-        return 0 if (result := c.fetchone()) is None else result[0]
+        result = c.fetchone()
+        result = 0 if result is None else result[0]
+        return result
 
 def cache_on_latest_ts(cache_size=1):
     
