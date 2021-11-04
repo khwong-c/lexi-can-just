@@ -7,6 +7,7 @@ TZ_HK = timezone(timedelta(hours=8))
 POLL_INTERVAL = 10 # In Seconds
 MERGE_INTERVAL = 30 # In minutes
 MERGE_INTERVAL_SEC = MERGE_INTERVAL * 60
+TS_CACHE_TTL = 60
 
 # Files
 FILE_LOG_CRAWL = "log/crawl.log"
