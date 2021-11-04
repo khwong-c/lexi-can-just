@@ -68,3 +68,12 @@ def cache_on_latest_ts(cache_size=1):
         return internal_deco(func)
     else:
         return internal_deco
+
+def debug_gate(func): 
+    @wraps(func)
+    def internal_func(*args,**kwargs):
+        if DEBUG == '':
+            return {'debug_function':True}
+        else:
+            return func(*args,**kwargs)
+    return internal_func

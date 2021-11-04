@@ -95,6 +95,7 @@ def update_service():
 
 # API Call to get all data
 @app.get("/all")
+@debug_gate
 def get_all_records():
     return read_all_records()  
 
@@ -110,10 +111,12 @@ def get_all_count():
 
 # Select Data in range
 @app.get("/text/{year}/{month}")
+@debug_gate
 def get_text_month(year: int, month: int):
     if not ( 1 <= month <= 12): raise ERR_INVALID_MONTH
     return read_records_in_range(year,month)
 @app.get("/text/{year}")
+@debug_gate
 def get_text_year(year: int):
     return read_records_in_range(year)
 
@@ -138,6 +141,7 @@ def get_count_year(year: int):
 
 # API Call of Logs
 @app.get("/log/crawl")
+@debug_gate
 def get_log_crawl():
     logs = [ line.split(' ') for line in read_log() if 'Crawl' in line ]
     return [
@@ -146,6 +150,7 @@ def get_log_crawl():
     ]
 
 @app.get("/log/merge")
+@debug_gate
 def get_log_merge():
     logs = [line.split(' ') for line in read_log() if 'Merge' in line]
     return [
@@ -154,5 +159,6 @@ def get_log_merge():
     ]
 
 @app.get("/log/error")
+@debug_gate
 def get_log_crawl():
     return [line for line in read_log() if 'ERROR' in line]

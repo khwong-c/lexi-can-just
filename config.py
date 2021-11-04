@@ -18,4 +18,4 @@ DIR_DB  = "lexican.db"
 SQLITE_DB_MERGED  = "lexican.merged.sqlite.db"
 SQLITE_DB_LOG  = "lexican.log.sqlite.db"
 
-DEBUG = os.environ.get('DEBUG', False)
+DEBUG = os.environ.get('DEBUG', '')
