@@ -26,6 +26,7 @@ The crawler will be hosted on Lightsail with API access to the data soon.
 ## TO-DO
 - [x] Host the crawler on Lightsail.
 - [x] Web API for data access (with FastAPI).
-- [ ] Think of functions provided by the service. (Select stats from an interval? Generated Graphics?)
+- [x] Select stats from an interval.
+- [ ] Think of functions provided by the service. (Generated Graphics?)
 - [x] Start-up script for launching the crawler and web service.
 - [ ] Analyse log and finetune crawling interval.
