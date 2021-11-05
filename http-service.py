@@ -89,6 +89,7 @@ def read_root():
     return {'just to':'say hi, again.'}
 
 @app.get("/update_server")
+@debug_gate
 def update_service():
     os.system("git pull")
     return {'result':'done'}
