@@ -11,6 +11,22 @@ Finding out Cantonese speakers are curious about which Chinese characters.
 The lexicon lists [50 recently searched characters](https://humanum.arts.cuhk.edu.hk/Lexis/lexi-can/just.php) (in PHP), from both search box and direct links on the site.
 However, historical results are not available to the public.
 
+## Requirement
+Python 3.9 + Sqlite
+Lightsail + Stock Amazon Linux 2 cannot meet the requirements with "yum".
+
+Quick cookbook:
+``` Bash
+# Install Sqlite
+sudo yum install sqlite-devel
+
+# Compile and install Python 3.9
+wget https://www.python.org/ftp/python/3.9.6/Python-3.9.6.tgz
+# Untar the source and cd.
+./configure --enable-optimizations
+sudo make altinstall
+```
+
 ## What does the crawler do?
 It polls and parses the search record every 10 seconds.
 Results per second are temporarily stored in files and merged in 30 minutes intervals.
