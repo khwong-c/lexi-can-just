@@ -11,9 +11,16 @@ Finding out Cantonese speakers are curious about which Chinese characters.
 The lexicon lists [50 recently searched characters](https://humanum.arts.cuhk.edu.hk/Lexis/lexi-can/just.php) (in PHP), from both search box and direct links on the site.
 However, historical results are not available to the public.
 
+## What does the crawler do?
+It polls and parses the search record every 10 seconds.
+Results per second are temporarily stored in files and merged in 30 minutes intervals.
+
+## Where to access the data?
+The crawler will be hosted on Lightsail with API access to the data soon.
+
 ## Requirement
 Python 3.9 + Sqlite
-Lightsail + Stock Amazon Linux 2 cannot meet the requirements with "yum".
+Lightsail + Stock Amazon Linux 2 cannot meet the requirements with "yum" alone.
 
 Quick cookbook:
 ``` Bash
@@ -26,13 +33,7 @@ wget https://www.python.org/ftp/python/3.9.6/Python-3.9.6.tgz
 ./configure --enable-optimizations
 sudo make altinstall
 ```
-
-## What does the crawler do?
-It polls and parses the search record every 10 seconds.
-Results per second are temporarily stored in files and merged in 30 minutes intervals.
-
-## Where to access the data?
-The crawler will be hosted on Lightsail with API access to the data soon.
+Remaining are `pip install -r requirements.txt` and `crontab -e` according crontab_config.
 
 ## Remark
 - The searching rate on Lexi-can is around 100 characters per minute.
